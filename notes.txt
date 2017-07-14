@@ -1,0 +1,19 @@
+python -m django --version -> check django version
+django-admin startproject mysite
+python manage.py startapp <app_name>
+add aplication in INSTALLED_APPS in settings.py
+python manage.py makemigrations <app_name> -> after making changes to models, django stores as migrations
+python manage.py sqlmigrate polls <migration_id> -> runs migration and return sql
+python manage.py migrate -> creates/synchronizes models with databases
+*******
+#changing models
+1. change in models.py
+2. execute python manage.py makemigrations <app_name>
+3. execute python manage.py migrate
+****
+register models in admin.py
+python manage.py runserver -> starts server
+python manage.py shell
+store templates in <app_name>/templates/<app_name>
+store static files(e.g css,img) in <app_name>/static/<app_name>
+ython -c "import django; print(django.__path__)" -> finding location of django source files
