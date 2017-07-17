@@ -28,18 +28,24 @@ class SnippetSerializer(serializers.Serializer):
 """
 
 
-class SnippetSerializer(serializers.ModelSerializer):
+class SnippetSerializer(serializers.HyperlinkedModelSerializer):
     # source controls which attribute is used to populate a field
     owner = serializers.ReadOnlyField(source='owner.username')
+    highlight = serializers.HyperlinkedIdentityField(view_name='snippet-highlight',
+                                                     format='html')
 
     class Meta:
         model = Snippet
-        fields = ('id', 'title', 'owner', 'code', 'linenos', 'language', 'style')
+        # url fields by default refer to '<model_name>-detail' urls
+        fields = ('url', 'id', 'highlight', 'title', 'owner', 'code', 'linenos', 'language', 'style')
 
 
-class UserSerializer(serializers.ModelSerializer):
-    snippets = serializers.PrimaryKeyRelatedField(many=True, queryset=Snippet.objects.all())
+class UserSerializer(serializers.HyperlinkedModelSerializer):
+    snippets = serializers.HyperlinkedRelatedField(many=True,
+                                                   view_name='snippet-detail',
+                                                   read_only=True)
 
     class Meta:
         model = User
+        # url fields by default refer to '<model_name>-detail' urls
         fields = ('id', 'username', 'snippets')
