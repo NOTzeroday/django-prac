@@ -24,3 +24,9 @@ python manage.py migrate
 
 #initialize admin
 python manage.py createsuperuser
+
+
+from rest_framework import status -> contains http status codes
+
+#passing authentication credentials
+http -a tom:password123 POST http://127.0.0.1:8000/snippets/ code="print 789"
